@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <title>Random GIF Fetcher</title>
+    </head>
+
+    <body>
+        <img src="#">
+    </body>
+
+    <script>
+        const img = document.querySelector("img");
+        fetch("https://api.giphy.com/v1/gifs/translate?api_key=9w6TARUKnw07HPH6iEQ0twQKpjCnTMas&s=cats", {mode: "cors"})
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(response) {
+            img.src = response.data.images.original.url;
+        })
+        .catch(function() {
+            console.log("An error occurred – please double check the request");
+        });
+    </script>
+
+</html>
