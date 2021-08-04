@@ -4,24 +4,70 @@
 
     <head>
         <title>Random GIF Fetcher</title>
+        <link rel="stylesheet" href="styles.css">
     </head>
 
-    <body>
-        <img src="#">
+    <body class="flex flex-column flex-center">
+        <h1>GIF Finder</h1>
+        <img src="#" class="h-600 w-600 object-fit-cover">
+        <button class="w-600 mt-10">New GIF</button>
     </body>
 
     <script>
+
         const img = document.querySelector("img");
-        fetch("https://api.giphy.com/v1/gifs/translate?api_key=9w6TARUKnw07HPH6iEQ0twQKpjCnTMas&s=cats", {mode: "cors"})
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(response) {
-            img.src = response.data.images.original.url;
-        })
-        .catch(function() {
-            console.log("An error occurred – please double check the request");
+        const button = document.querySelector("button");
+
+        const refreshimage = function() {
+            updateButtonText("setToLoading");
+            button.disabled = true;
+            fetch("https://api.giphy.com/v1/gifs/translate?api_key=9w6TARUKnw07HPH6iEQ0twQKpjCnTMas&s=cats", { mode: "cors" })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(response) {
+                updateButtonText("setToDefault");
+                button.disabled = false;
+                img.src = response.data.images.original.url;
+            })
+            .catch(function() {
+                console.log("An error has occurred in refreshImage() – please check the request");
+            });
+        }
+        
+        const refreshButtonEmoji = function() {
+            fetch("https://emoji-api.com/emojis?search=cat&access_key=424374917a17eb7701703c91d69f55e9e9795c07", { mode: "cors" })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(response) {
+                let emoji = response[0].character;
+                updateButtonText("updateEmoji", emoji);
+            })
+            .catch(function() {
+                console.log("An error has occurred in refreshButtonEmoji() – please check the request");
+            });
+        }
+
+        const updateButtonText = function(mode, emoji) {
+            if (mode == "updateEmoji") {
+                button.innerHTML = `New GIF ${emoji}`;
+            } else if (mode == "setToLoading") {
+                button.innerHTML = "Loading";
+            } else if (mode == "setToDefault") {
+                button.innerHTML = "New GIF";
+            }
+        }
+
+        button.addEventListener("click", function() {
+            currentImageSRC = img.src;
+            refreshimage();
+            refreshButtonEmoji();
         });
+
+        refreshButtonEmoji();
+        refreshimage();
+
     </script>
 
 </html>
