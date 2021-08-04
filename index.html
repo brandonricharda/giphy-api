@@ -9,8 +9,9 @@
 
     <body class="flex flex-column flex-center">
         <h1>GIF Finder</h1>
+        <input placeholder="Enter a theme (i.e. 'cats' or 'The Office')" class="w-600 h-50 mb-10 text-align-center font-20">
         <img src="#" class="h-600 w-600 object-fit-cover">
-        <button class="w-600 mt-10">New GIF</button>
+        <button class="w-600 h-50 mt-10 font-20 borderless primary-color">New GIF</button>
     </body>
 
     <script>
@@ -19,15 +20,13 @@
         const button = document.querySelector("button");
 
         const refreshimage = function() {
-            updateButtonText("setToLoading");
-            button.disabled = true;
+            updateButton("setToLoading");
             fetch("https://api.giphy.com/v1/gifs/translate?api_key=9w6TARUKnw07HPH6iEQ0twQKpjCnTMas&s=cats", { mode: "cors" })
             .then(function(response) {
                 return response.json();
             })
             .then(function(response) {
-                updateButtonText("setToDefault");
-                button.disabled = false;
+                updateButton("setToDefault");
                 img.src = response.data.images.original.url;
             })
             .catch(function() {
@@ -42,20 +41,22 @@
             })
             .then(function(response) {
                 let emoji = response[0].character;
-                updateButtonText("updateEmoji", emoji);
+                updateButton("updateEmoji", emoji);
             })
             .catch(function() {
                 console.log("An error has occurred in refreshButtonEmoji() – please check the request");
             });
         }
 
-        const updateButtonText = function(mode, emoji) {
+        const updateButton = function(mode, emoji) {
             if (mode == "updateEmoji") {
                 button.innerHTML = `New GIF ${emoji}`;
             } else if (mode == "setToLoading") {
                 button.innerHTML = "Loading";
+                button.disabled = true;
             } else if (mode == "setToDefault") {
                 button.innerHTML = "New GIF";
+                button.disabled = false;
             }
         }
 
