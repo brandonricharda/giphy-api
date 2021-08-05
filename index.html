@@ -18,10 +18,12 @@
 
         const img = document.querySelector("img");
         const button = document.querySelector("button");
+        const input = document.querySelector("input");
+        let query = "cat";
 
         const refreshimage = function() {
             updateButton("setToLoading");
-            fetch("https://api.giphy.com/v1/gifs/translate?api_key=9w6TARUKnw07HPH6iEQ0twQKpjCnTMas&s=cats", { mode: "cors" })
+            fetch(`https://api.giphy.com/v1/gifs/translate?api_key=9w6TARUKnw07HPH6iEQ0twQKpjCnTMas&s=${query}`, { mode: "cors" })
             .then(function(response) {
                 return response.json();
             })
@@ -35,7 +37,7 @@
         }
         
         const refreshButtonEmoji = function() {
-            fetch("https://emoji-api.com/emojis?search=cat&access_key=424374917a17eb7701703c91d69f55e9e9795c07", { mode: "cors" })
+            fetch(`https://emoji-api.com/emojis?search=${query}&access_key=424374917a17eb7701703c91d69f55e9e9795c07`, { mode: "cors" })
             .then(function(response) {
                 return response.json();
             })
@@ -44,7 +46,8 @@
                 updateButton("updateEmoji", emoji);
             })
             .catch(function() {
-                console.log("An error has occurred in refreshButtonEmoji() – please check the request");
+                let emoji = "";
+                updateButton("updateEmoji", emoji);
             });
         }
 
@@ -60,8 +63,14 @@
             }
         }
 
+        const captureUserInput = function() {
+            return input.value;
+        }
+
         button.addEventListener("click", function() {
-            currentImageSRC = img.src;
+            if (captureUserInput() != "") {
+                query = captureUserInput();
+            }
             refreshimage();
             refreshButtonEmoji();
         });
