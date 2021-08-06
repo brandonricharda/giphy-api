@@ -3,7 +3,7 @@
 <html>
 
     <head>
-        <title>Random GIF Fetcher</title>
+        <title>GIF Fetcher</title>
         <link rel="stylesheet" href="styles.css">
     </head>
 
@@ -32,7 +32,7 @@
                 img.src = response.data.images.original.url;
             })
             .catch(function() {
-                console.log("An error has occurred in refreshImage() – please check the request");
+                img.src = "https://media.giphy.com/media/mq5y2jHRCAqMo/giphy.gif";
             });
         }
         
