@@ -15,3 +15,5 @@ I went one step further and incorporated the Open Emoji API, which you can learn
 https://emoji-api.com/
 
 When the user searches for a GIF, I pass that query into the Open Emoji API. I then select the first result and update the button text to include that emoji. If no emoji is returned, the button simply ends up without an emoji.
+
+![Screenshot](giphy-api.png)
