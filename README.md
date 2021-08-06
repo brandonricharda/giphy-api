@@ -1,5 +1,7 @@
 # README
 
+**Demo:** https://brandonricharda.github.io/giphy-api/
+
 This is my solution to the Giphy API practice assignment, which is part of The Odin Project. Learn more about the assignment here:
 
 https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/javascript/lessons/working-with-apis
